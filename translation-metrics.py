@@ -7,7 +7,7 @@ import nltk
 from nltk.translate.bleu_score import sentence_bleu
 import numpy as np
 from rouge import FilesRouge
-# from SARI import *
+from sari import corpus_sari
 
 '''
 TER in Bash script (NMT repo) only, also find there 1-4Gram BLEU
@@ -71,11 +71,12 @@ def rouge(reference_corpus,generated_corpus):
     scores = fr.get_scores(reference_corpus,generated_corpus)
     print(scores,'\n\n\n')
 
-def sari():
+def dosari(orig_sents,sys_sents,ref_sents):
     '''
     Import SARI.py functionality to here, append score to dict
     '''
-    pass
+    
+#    score = corpus_sari(orig_sents,sys_sents,ref_sents)
 
 def tojson(output_file,outmetrics):
     '''
@@ -91,6 +92,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-r',"--ref",help="Path to input text file containing reference text from your model")
     parser.add_argument('-g',"--gen",help="Path to input text file containing generated text from your model")
+    parser.add_argument('-s',"--sys",help="Path to input text file containing system text from your model, for simplification only")
     parser.add_argument('-rg',"--rouge",help="If specified, outputs ROUGE scores. Run by specifying '--rouge=True'")
     parser.add_argument('-v',"--verbose",help="verbose to do analysis. Run by specifying --verbose=True or -v 1")
     parser.add_argument('-o',"--out",help="Path to output file")
@@ -98,13 +100,20 @@ def main():
 
     reference_corpus = args.ref
     generated_corpus = args.gen
+    system_corpus = args.sys
     output_file = args.out
     introfile = 'view-sents.txt'
+
     reftokens = []
     hyptokens = []
+    orig_sents = []
+    sys_sents = []
+    ref_sents = []
     outmetrics = dict.fromkeys(['BLEU-1','BLEU-2','BLEU-3','BLEU-4','BLEU-10','TER','SARI'])
+
     tokenise(reference_corpus,generated_corpus,reftokens,hyptokens)
     bleu(args,reftokens,hyptokens,outmetrics)
+
     if args.rouge:
         rouge(reference_corpus,generated_corpus)
     tojson(output_file,outmetrics)
