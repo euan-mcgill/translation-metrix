@@ -333,9 +333,15 @@ sys_sents = '''Gremin sings of his great happiness with Tatyana, and introduces 
 James Harold Wilson, Baron Wilson of Rievaulx, KG, OBE, FRS, PC ( 11 March 1916 â '' 24 May 1995 ) was a British politician ( from 1995 ).
 These had originally four gates, Porta al Borgo, Porta San Marco, Porta Carratica and Porta Lucchese.'''.split('\n')
 #%%
-sari = corpus_sari(orig_sents, sys_sents, refs_sents)
 
-per_sen_sair = []
-for i in range(len(orig_sents)):
-    orig_sent, sys_sent, refs_sent = orig_sents[i], sys_sents[i], refs_sents[0][i]
-    per_sen_sair.append(corpus_sari([orig_sent], [sys_sent], [[refs_sent]]))
+def all_results(corpus_sari):
+    sari = corpus_sari(orig_sents, sys_sents, refs_sents)
+    per_sen_sair = []
+    ticker = 0
+    for i in range(len(orig_sents)):
+        orig_sent, sys_sent, refs_sent = orig_sents[i], sys_sents[i], refs_sents[0][i]
+        per_sen_sair.append(corpus_sari([orig_sent], [sys_sent], [[refs_sent]]))
+        return (per_sen_sair)
+
+for item in zip(per_sen_sair,sys_sents):
+    print(item)
