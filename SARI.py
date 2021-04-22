@@ -188,11 +188,11 @@ def main():
     fnameturk  = "./turkcorpus/test.8turkers.tok.turk."
 
 
-    ssent = "About 95 species are currently accepted ."
-    csent1 = "About 95 you now get in ."
-    csent2 = "About 95 species are now agreed ."
-    csent3 = "About 95 species are currently agreed ."
-    rsents = ["About 95 species are currently known .", "About 95 species are now accepted .", "95 species are now accepted ."]
+    ssent = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe ( including continuous deployment in the Peninsular War ) , the Caribbean , North Africa and later in North America ."
+    csent1 = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe, the Caribbean, North Africa and later in North America."
+    csent2 = "The British Army was heavily involved in the Napoleonic Wars."
+    csent3 = "The British army was heavily involved in the Napoleonic Wars in which the army served in Spain , across Europe , and in North Africa ."
+    rsents = ["The British army was heavily involved in the Napoleonic Wars in which the army served in Spain , across Europe , and in North Africa ."]
 
     print(SARIsent(ssent, csent1, rsents))
     print(SARIsent(ssent, csent2, rsents))
