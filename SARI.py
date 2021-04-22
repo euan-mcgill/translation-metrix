@@ -188,15 +188,18 @@ def main():
     fnameturk  = "./turkcorpus/test.8turkers.tok.turk."
 
 
-    ssent = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe ( including continuous deployment in the Peninsular War ) , the Caribbean , North Africa and later in North America ."
-    csent1 = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe, the Caribbean, North Africa and later in North America."
-    csent2 = "The British Army was heavily involved in the Napoleonic Wars."
-    csent3 = "The British army was heavily involved in the Napoleonic Wars in which the army served in Spain , across Europe , and in North Africa ."
-    rsents = ["The British army was heavily involved in the Napoleonic Wars in which the army served in Spain , across Europe , and in North Africa ."]
+    ssent = "Marco Di Vaio ( born July 15 , 1976 ) is an Italian football striker , who currently plays for Bologna FC ." # complex corpus
+    csent5 = "Marco Vaio ( born 15 July, 1976 ) is a former Italian football player."
+    csent10 = "Marco Vaio ( born 15 July 1976 ) is a Italian football player."
+    csent15 = "Marco Vaio ( born 15 July, 1976 ) is a Italian football player."
+    csent20 = "Marco Vaio ( born 15 July, 1976 ) is a football player."
+    rsents = ["Marco Di Vaio ( born 15 July 1976 ) is an Italian football player . He plays for Bologna ."] # simple corpus
 
-    print(SARIsent(ssent, csent1, rsents))
-    print(SARIsent(ssent, csent2, rsents))
-    print(SARIsent(ssent, csent3, rsents))
+    print(SARIsent(ssent, ssent, rsents))
+    print(SARIsent(ssent, csent5, rsents))
+    print(SARIsent(ssent, csent10, rsents))
+    print(SARIsent(ssent, csent15, rsents))
+    print(SARIsent(ssent, csent20, rsents))
 
 
 if __name__ == '__main__':
