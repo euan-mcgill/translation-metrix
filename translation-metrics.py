@@ -7,7 +7,7 @@ import nltk
 from nltk.translate.bleu_score import sentence_bleu
 import numpy as np
 from rouge import FilesRouge
-from sari import corpus_sari
+#from sari import corpus_sari
 
 '''
 TER in Bash script (NMT repo) only, also find there 1-4Gram BLEU
@@ -27,7 +27,7 @@ def tokenise(reference_corpus,generated_corpus,reftokens,hyptokens):
             hyptokens.append(nltk.word_tokenize(line))
     return (reftokens,hyptokens)
 
-def bleu(args,reftokens,hyptokens,outmetrics):
+def bleu(args,reftokens,hyptokens,outmetrics,introfile,generated_corpus):
     '''
     reftokens = pre-processing tokens from the reference transcription to be passed to BLEU
     hyptokens = pre-processing tokens from the hypothesis transcription to be passed to BLEU
@@ -51,6 +51,10 @@ def bleu(args,reftokens,hyptokens,outmetrics):
         score_ten = sentence_bleu([refs],hyps,weights=(0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1))
         score_list_ten[cnt] = score_ten
         cnt += 1
+
+    score_list_mean = np.mean([score_list_one,score_list_three,score_list_two,score_list_four],axis=0)
+    print(score_list_mean)
+
 #    print('\n\n\n 1-GRAM = ',score_list_one.mean(),'\n\n')
     outmetrics['BLEU-1'] = score_list_one.mean()
     outmetrics['BLEU-2'] = score_list_two.mean()
@@ -58,13 +62,23 @@ def bleu(args,reftokens,hyptokens,outmetrics):
     outmetrics['BLEU-4'] = score_list_four.mean()
     outmetrics['BLEU-10'] = score_list_ten.mean()
 
-def introspect(introfile,hyptokens,score_list_one):
-    with open(introfile, 'w') as sents:
-        ticker = 0
-        for item in zip(score_list_one,hyptokens):
-            ticker += 1
-            sents.append(item,ticker,score_list_one)
-    return(score_list_one)
+    if args.verbose:
+        with open(introfile, 'w') as sents, open(generated_corpus, 'r') as cleanlines:
+            ticker = 0
+            for item in zip(score_list_mean,cleanlines):
+                ticker += 1
+                print(item)
+#                sents.append(item)
+    ''' to write to file, run for example: python3 translation-metrics.py -r gencorpora/ref.txt -g gencorpora/0.txt -o 0.json -v 1 > logs/0-sentences.txt
+    '''
+
+#def introspect(introfile,hyptokens,score_list_one):
+#    with open(introfile, 'w') as sents:
+#        ticker = 0
+#        for item in zip(score_list_one,hyptokens):
+#            ticker += 1
+#            sents.append(item,ticker,score_list_one)
+#    return(score_list_one)
 
 def rouge(reference_corpus,generated_corpus):
     fr = FilesRouge()
@@ -78,14 +92,17 @@ def dosari(orig_sents,sys_sents,ref_sents):
     
 #    score = corpus_sari(orig_sents,sys_sents,ref_sents)
 
-def tojson(output_file,outmetrics):
+def tojson(args,output_file,outmetrics):
     '''
     outmetrics = dictionary containing scores from metrics
     output_file = JSON where scores will be written from dict
     '''
     with open (output_file,'w') as out:
         json.dump(outmetrics,out,indent=4)
-    print('\n\n\nWritten to json!\n')
+    if args.verbose:
+        pass
+    else:
+        print('\n\n\nWritten to json!\n')
 
 def main():
 
@@ -100,25 +117,20 @@ def main():
 
     reference_corpus = args.ref
     generated_corpus = args.gen
-    system_corpus = args.sys
+#    system_corpus = args.sys
     output_file = args.out
     introfile = 'view-sents.txt'
 
     reftokens = []
     hyptokens = []
-    orig_sents = []
-    sys_sents = []
-    ref_sents = []
     outmetrics = dict.fromkeys(['BLEU-1','BLEU-2','BLEU-3','BLEU-4','BLEU-10','TER','SARI'])
 
     tokenise(reference_corpus,generated_corpus,reftokens,hyptokens)
-    bleu(args,reftokens,hyptokens,outmetrics)
+    bleu(args,reftokens,hyptokens,outmetrics,introfile,generated_corpus)
 
     if args.rouge:
         rouge(reference_corpus,generated_corpus)
-    tojson(output_file,outmetrics)
-    if args.verbose:
-        introspect(introfile,hyptokens,score_list_one)
+    tojson(args,output_file,outmetrics)
 
 if __name__ == '__main__':
     main()

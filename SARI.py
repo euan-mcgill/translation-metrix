@@ -188,15 +188,18 @@ def main():
     fnameturk  = "./turkcorpus/test.8turkers.tok.turk."
 
 
-    ssent = "About 95 species are currently accepted ."
-    csent1 = "About 95 you now get in ."
-    csent2 = "About 95 species are now agreed ."
-    csent3 = "About 95 species are currently agreed ."
-    rsents = ["About 95 species are currently known .", "About 95 species are now accepted .", "95 species are now accepted ."]
+    ssent = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe ( including continuous deployment in the Peninsular War ) , the Caribbean , North Africa and later in North America ." # complex corpus
+    csent5 = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe, the Caribbean, North Africa and later in North America."
+    csent10 = "The British Army was heavily involved in the Napoleonic Wars where the army served in multiple campaigns across Europe ( including continuous deployment in the Peninsular War ), the Caribbean, North Africa and later in North America."
+    csent15 = "British involvement in European and North African wars"
+    csent20 = "The British Army was heavily involved in the Napoleonic Wars."
+    rsents = ["The British army was heavily involved in the Napoleonic Wars in which the army served in Spain , across Europe , and in North Africa ."] # simple corpus
 
-    print(SARIsent(ssent, csent1, rsents))
-    print(SARIsent(ssent, csent2, rsents))
-    print(SARIsent(ssent, csent3, rsents))
+    print(SARIsent(ssent, ssent, rsents))
+    print(SARIsent(ssent, csent5, rsents))
+    print(SARIsent(ssent, csent10, rsents))
+    print(SARIsent(ssent, csent15, rsents))
+    print(SARIsent(ssent, csent20, rsents))
 
 
 if __name__ == '__main__':
