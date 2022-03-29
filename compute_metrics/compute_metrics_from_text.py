@@ -32,9 +32,10 @@ with open(REF_FILENAME, 'r', encoding = 'utf-8') as f:
 compute_scores = []
 
 for it in EVAL_EPOCHS:
-# edit next line to change directory and / or 
-    with open(WORKING_DIR+'/generated_text/'+'{}_{}.txt'.format(it, label), 'r', encoding = 'utf-8') as f:
-        hyp_text = f.read()
+# edit next line to change directory and / or translation type
+    with open(WORKING_DIR+'/posdep/'+'pred_{}run_emb.txt'.format(it), 'r', encoding = 'utf-8') as f:
+        hypdata = f.read()
+        hyp_text = hypdata.upper()
         if "কে"  in hyp_text:
             hyp_text = hyp_text.replace("কে", ' ' ).strip()
         hyp_text = [s.strip() for s in hyp_text.split('\n')]
@@ -52,4 +53,5 @@ for s in compute_scores:
         compute_scores_dict[k].append(s[k])
 
 results = pd.DataFrame.from_dict(compute_scores_dict)
-results.to_excel(WORKING_DIR+'/metrics_'+label+'_'+WORKING_DIR+'.xlsx', index = False)
+# uncomment in order to save to excel file
+# results.to_excel(WORKING_DIR+'/metrics_'+label+'.xlsx', index = False)
