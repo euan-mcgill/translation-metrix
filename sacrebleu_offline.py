@@ -9,7 +9,7 @@ Created on Thu Mar 24 15:26:38 2022
 # import sacrebleu
 from sacrebleu.metrics import BLEU, CHRF, TER # ensure v2.0.0
 
-silver = '/home/upf/Documents/resources/corpora/UPM-LSE/BD/EXPERIMENTS/no_embdg/pred_3800_no.txt'
+silver = '/home/upf/Documents/resources/corpora/UPM-LSE/BD/EXPERIMENTS/no_embdg/pred_200_no.txt'
 # silver = '/home/upf/Documents/resources/corpora/UPM-LSE/BD/EXPERIMENTS/aug/frases_test_1_augmented.txt'
 gold ='/home/upf/Documents/resources/corpora/UPM-LSE/BD/EXPERIMENTS/signos/signos_test_1.txt'
 
@@ -19,6 +19,7 @@ refs = [[]]
 with open(silver, 'r') as g:
     for line in g:
         gen.append(line.upper())
+        # gen.append(line)
 
 with open(gold, 'r') as r:
     for line in r:
