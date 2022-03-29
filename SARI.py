@@ -188,12 +188,12 @@ def main():
     fnameturk  = "./turkcorpus/test.8turkers.tok.turk."
 
 
-    ssent = "Marco Di Vaio ( born July 15 , 1976 ) is an Italian football striker , who currently plays for Bologna FC ." # complex corpus
-    csent5 = "Marco Vaio ( born 15 July, 1976 ) is a former Italian football player."
-    csent10 = "Marco Vaio ( born 15 July 1976 ) is a Italian football player."
-    csent15 = "Marco Vaio ( born 15 July, 1976 ) is a Italian football player."
-    csent20 = "Marco Vaio ( born 15 July, 1976 ) is a football player."
-    rsents = ["Marco Di Vaio ( born 15 July 1976 ) is an Italian football player . He plays for Bologna ."] # simple corpus
+    ssent = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe ( including continuous deployment in the Peninsular War ) , the Caribbean , North Africa and later in North America ." # complex corpus
+    csent5 = "The British Army was heavily involved in the Napoleonic Wars in which the army served in multiple campaigns across Europe, the Caribbean, North Africa and later in North America."
+    csent10 = "The British Army was heavily involved in the Napoleonic Wars where the army served in multiple campaigns across Europe ( including continuous deployment in the Peninsular War ), the Caribbean, North Africa and later in North America."
+    csent15 = "British involvement in European and North African wars"
+    csent20 = "The British Army was heavily involved in the Napoleonic Wars."
+    rsents = ["The British army was heavily involved in the Napoleonic Wars in which the army served in Spain , across Europe , and in North Africa ."] # simple corpus
 
     print(SARIsent(ssent, ssent, rsents))
     print(SARIsent(ssent, csent5, rsents))
